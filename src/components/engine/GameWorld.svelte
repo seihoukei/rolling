@@ -3,6 +3,7 @@
     import Trigger from "utility/trigger.js"
     import GAME_SEASONS from "data/game-seasons.js"
     import {tick} from "svelte"
+    import GAME_OBJECTS from "data/game-objects.js"
 
     const GROUND_LEVEL = -12
     const MAX_RESET_COOLDOWN = 2
@@ -12,46 +13,39 @@
     let resetCooldown = MAX_RESET_COOLDOWN
 
     export let world = {
-        gravity : 1,
-        ground : GROUND_LEVEL,
         season : 0,
+
+        gravity : 1,
+        friction : 0.1,
+        airFriction : 0.1,
+
+        minSpikeDistance : 50,
+        maxSpikeDistance : 150,
+
+        bonuses : ["score", "score", "score", "slow", "fast", "dash", "clone"],
 
         started : false,
         rules : true,
         over : false,
 
         distance : 0,
-        nextBonus : 200,
+        nextBonus : 100,
+        nextSpike : 200,
         nextSeason : GAME_SEASONS[0].length,
 
         score : 0,
-        jumps : 5,
     }
 
-    registerTrigger("double-jumped", doubleJumped)
     registerTrigger("distance-reached", distanceReached)
     registerTrigger("game-over", gameOver)
     registerTrigger("command-advance", advance)
     registerTrigger("command-keep-alive", keepAlive)
     registerTrigger("command-game-action", gameAction)
     registerTrigger("rhythm-success", rhythmSuccess)
-
-    registerTrigger("bonus-jump", bonusJump)
+    registerTrigger("object-destroyed", objectDestroyed)
 
     function keepAlive() {
         resetCooldown = MAX_RESET_COOLDOWN
-    }
-
-    async function doubleJumped() {
-        await tick()
-
-        if (advances === lastDoubleJump)
-            return
-
-        lastDoubleJump = advances
-        world.jumps -= 1
-        if (world.jumps < 0)
-            world.jumps = 0
     }
 
     function advance(time) {
@@ -66,8 +60,13 @@
             world.distance = x
 
         if (world.distance > world.nextBonus) {
-            Trigger("command-spawn-bonus", world.nextBonus + 100)
-            world.nextBonus += Math.random() * 90 + 10
+            Trigger("command-spawn-object", world.bonuses, world.nextBonus + 100)
+            world.nextBonus += Math.random() * 100 + 50
+        }
+
+        if (world.distance > world.nextSpike) {
+            Trigger("command-spawn-object", "spike", world.nextSpike + 100)
+            world.nextSpike += Math.random() * (world.maxSpikeDistance - world.minSpikeDistance) + world.minSpikeDistance
         }
 
         if (world.distance > world.nextSeason) {
@@ -98,12 +97,13 @@
 
     }
 
-    function bonusJump() {
-        world.jumps += 3
-    }
-
     function rhythmSuccess(special, offset) {
         world.score += 10 * (1 - offset) ** 2
+    }
+
+    function objectDestroyed(object) {
+        const score = GAME_OBJECTS[object.type]?.score ?? 0
+        world.score += score
     }
 
     function gameOver() {

@@ -2,15 +2,15 @@
     import DisplayCamera from "components/ui/DisplayCamera.svelte"
     import DisplayCharacter from "components/ui/DisplayCharacter.svelte"
     import DisplayShine from "components/ui/DisplayShine.svelte"
-    import DisplayBonus from "components/ui/DisplayBonus.svelte"
     import Trigger from "utility/trigger.js"
     import DisplayOverlay from "components/ui/DisplayOverlay.svelte"
+    import DisplayObject from "components/ui/DisplayObject.svelte"
 
     export let game
 
     $: characters = game?.characters ?? []
     $: shines = game?.shines ?? []
-    $: bonuses = game?.bonuses ?? []
+    $: objects = game?.objects ?? []
     $: world = game?.world ?? {}
 
     function gameAction(special = false) {
@@ -48,8 +48,8 @@
          on:touchstart={touchAction}
     >
         <DisplayCamera {game}>
-            {#each bonuses as bonus}
-                <DisplayBonus {bonus} />
+            {#each objects as object}
+                <DisplayObject {object} />
             {/each}
             {#each characters as character}
                 <DisplayCharacter {game} {character} />

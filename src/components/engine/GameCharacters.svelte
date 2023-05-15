@@ -2,6 +2,7 @@
     import registerTrigger from "utility/register-trigger.js"
     import GameCharacter from "components/engine/GameCharacter.svelte"
     import Trigger from "utility/trigger.js"
+    import GAME_RULES from "data/game-rules.js"
 
     export let game
     export let characters = []
@@ -11,16 +12,17 @@
     registerTrigger("command-create-character", createCharacter)
     registerTrigger("bonus-clone", bonusClone)
 
-    $: world = game?.world ?? {}
-
     function createCharacter() {
         const character = {
             x : 0,
-            y : world.ground,
+            y : GAME_RULES.ground,
             dx : 0,
             dy : 0,
+            dash : 0,
+            dashCooldown : 5,
             size : 10,
             dead : false,
+            jumping : false,
         }
         characters.push(character)
         characters = characters
@@ -29,7 +31,8 @@
     function cloneCharacter(character, x = character.x, y = character.y) {
         const newCharacter = {...character, x, y}
 
-        //offset?
+        newCharacter.jumping = true
+        newCharacter.dash += 0.1
 
         characters.push(newCharacter)
         characters = characters

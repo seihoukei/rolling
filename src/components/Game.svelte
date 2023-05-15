@@ -4,7 +4,7 @@
     import GameDisplay from "components/ui/GameDisplay.svelte"
     import GameCharacters from "components/engine/GameCharacters.svelte"
     import GameShines from "components/engine/GameShines.svelte"
-    import GameBonuses from "components/engine/GameBonuses.svelte"
+    import GameObjects from "components/engine/GameObjects.svelte"
     import GameWorld from "components/engine/GameWorld.svelte"
     import {onDestroy, onMount, tick} from "svelte"
     import GameCollisions from "components/engine/GameCollisions.svelte"
@@ -16,7 +16,7 @@
     registerTrigger("command-reset-game", resetGame)
 
     let characters
-    let bonuses
+    let objects
     let shines
     let rhythm
     let world
@@ -24,13 +24,10 @@
     let game = {}
 
     $: game.characters = characters
-    $: game.bonuses = bonuses
+    $: game.objects = objects
     $: game.shines = shines
     $: game.world = world
     $: game.rhythm = rhythm
-
-    $: liveCharacters = characters?.filter(x => !x.dead) ?? []
-    $: activeBonuses = bonuses?.filter(x => !x.picked) ?? []
 
     let animationFrame = null
     let lastTime = performance.now()
@@ -60,13 +57,13 @@
 <GameRhythm bind:rhythm />
 
 <GameWorld bind:world />
-<GameBonuses {game} bind:bonuses />
+<GameObjects {game} bind:objects />
 <GameShines bind:shines />
 <GameCharacters {game} bind:characters />
 
-<GameCollisions firstArray={liveCharacters}
-                 secondArray={activeBonuses}
-                 event="command-pick-bonus"
+<GameCollisions firstArray={characters}
+                 secondArray={objects}
+                 event="command-hit-object"
 />
 
 <GameDisplay {game} />

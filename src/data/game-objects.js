@@ -1,9 +1,11 @@
-const GAME_BONUSES = {
+const GAME_OBJECTS = {
     spike : {
         sprite : "../resources/bonus/spike.png",
-        pickable : false,
+        destructible : true,
+        score : 100,
         maxHeight : 0,
         event : "hit-spike",
+        z : 2,
     },
     score : {
         sprite : "../resources/bonus/score.png",
@@ -17,11 +19,11 @@ const GAME_BONUSES = {
         maxHeight : 50,
         event : "bonus-slow",
     },
-    jump: {
+    dash: {
         sprite : "../resources/bonus/jump.png",
         pickable : true,
-        maxHeight : 20,
-        event : "bonus-jump",
+        maxHeight : 50,
+        event : "bonus-dash",
     },
     clone : {
         sprite : "../resources/bonus/present.png",
@@ -37,4 +39,4 @@ const GAME_BONUSES = {
     },
 }
 
-export default GAME_BONUSES
+export default GAME_OBJECTS

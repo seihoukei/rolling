@@ -22,9 +22,6 @@
         Distance : {Math.floor(world.distance / 10)}
         Score : {Math.floor(world.score)}
     </div>
-    <div class="right stats">
-        {world.jumps} <img src="./resources/bonus/jump.png" class="icon" alt="jumps">
-    </div>
 {/if}
 
 <style>
@@ -38,20 +35,6 @@
         font-size: 5vmin;
         color : black;
         z-index : 2;
-    }
-
-    div.stats.right {
-        display: flex;
-        align-items: center;
-        flex-direction: row;
-        right : 0;
-        left : auto;
-        z-index : 2;
-    }
-
-    img.icon {
-        width : 1em;
-        height : 1em;
     }
 
     div.rules {

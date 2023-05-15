@@ -12,8 +12,11 @@
     async function advance() {
         await tick()
 
-        for (const first of firstArray) {
-            for (const second of secondArray) {
+        const liveFirst = firstArray?.filter(x => !x.dead) ?? []
+        const liveSecond = secondArray?.filter(x => !x.dead) ?? []
+
+        for (const first of liveFirst) {
+            for (const second of liveSecond) {
                 const dx = first.x - second.x
                 const dy = first.y - second.y
                 const distance2 = dx * dx + dy * dy
