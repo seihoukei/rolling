@@ -31,15 +31,11 @@
 
             camera.followSpeed = Math.min(0.6, camera.followSpeed + 0.02 * time)
 
-            for (let character of liveCharacters) {
-                cameraTarget.x += character.x
-                cameraTarget.y += character.y + 10
-            }
+            const lastCharacter = liveCharacters
+                .reduce((v,x) => x.x < v.x ? x : v)
 
-            cameraTarget.x /= liveCharacters.length
-            cameraTarget.y /= liveCharacters.length
-
-            cameraTarget.x += 40
+            cameraTarget.x += lastCharacter.x + 40
+            cameraTarget.y += lastCharacter.y + 10
 
             tweenCameraAxis(camera, cameraTarget, "x")
             tweenCameraAxis(camera, cameraTarget, "y")

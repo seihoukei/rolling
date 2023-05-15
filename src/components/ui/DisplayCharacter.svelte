@@ -6,21 +6,23 @@
     export let game
 
     const ROLL_FRAMES = 49
+    let dashDirection = 0
 
     $: world = game?.world ?? {}
     $: rhythm = game?.rhythm ?? {}
 
     $: dead = character.dead ?? false
     $: still = character.dx === 0
-    $: canDash = character.dx > GAME_RULES.dashSpeed && character.dashCooldown < 0
     $: frame = (Math.floor(character.x) % ROLL_FRAMES + ROLL_FRAMES) % ROLL_FRAMES
+    $: if (character.dash) dashDirection = Math.atan2(character.dy, character.dx)
 
     $: cssVariables = `
         --character-x: ${character.x}em;
         --character-y: ${character.y}em;
         --character-size: ${character.size}em;
         --character-background-y: ${-character.size * (Math.floor(frame) % 49)}em;
-        --dash-opacity: ${Math.min(character.dash * 2, 1)};
+        --dash-opacity: ${Math.max(0, Math.min(character.dashCooldown / GAME_RULES.dashCooldown, 1))};
+        --dash-direction: ${dashDirection}rad;
     `
 
 </script>
@@ -69,10 +71,6 @@
         cursor: default;
     }
 
-    div.character.canDash {
-        background-color: #FFFF55;
-    }
-
     div.dash {
         position: absolute;
         left : -400%;
@@ -82,5 +80,7 @@
         border-radius: 0 var(--character-size) var(--character-size) 0;
         background: linear-gradient(to bottom, #FFFF55, #FFFFFF00, #FFFFFF00, #FFFF55);
         opacity: var(--dash-opacity);
+        transform-origin: 90% 50%;
+        transform: rotate(var(--dash-direction));
     }
 </style>

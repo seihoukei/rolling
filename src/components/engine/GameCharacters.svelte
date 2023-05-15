@@ -19,7 +19,7 @@
             dx : 0,
             dy : 0,
             dash : 0,
-            dashCooldown : 5,
+            dashCooldown : 0,
             size : 10,
             dead : false,
             jumping : false,
@@ -32,7 +32,7 @@
         const newCharacter = {...character, x, y}
 
         newCharacter.jumping = true
-        newCharacter.dash += 0.1
+        newCharacter.dash += 0.2
 
         characters.push(newCharacter)
         characters = characters

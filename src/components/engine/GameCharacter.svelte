@@ -20,9 +20,12 @@
 
     function advancePosition(time, dash) {
         if (dash) {
-            character.x += character.dx * time * GAME_RULES.dashBoost
+            const speedScale = 1 + character.dash
+            character.x += character.dx * time * speedScale//GAME_RULES.dashBoost
+            character.y += character.dy * time * speedScale//GAME_RULES.dashBoost
             character.dash -= time
             character.dx *= (1 - world.airFriction) ** time
+            character.dy *= (1 - world.airFriction) ** time
         }
 
         if (!dash) {
@@ -74,7 +77,9 @@
         if (character.jumping && (character.dash > 0 || character.dashCooldown < 0))
             return false
 
-        character.dash = 0
+        character.dash = GAME_RULES.jumpDashTime
+        character.dashCooldown = GAME_RULES.dashCooldown
+
         character.jumping = true
         character.dx *= speedRate
         character.dy = - character.dx
@@ -83,12 +88,11 @@
     }
 
     function dash(amount) {
-        if (character.dashCooldown > 0)
-            return false
-
-        character.dy = 0
         character.dash = amount
         character.dashCooldown = GAME_RULES.dashCooldown
+
+        character.jumping = true
+        character.dy = 0
 
         return true
     }
@@ -100,7 +104,7 @@
         if (special) {
             if (!character.jumping)
                 jump()
-            else if (!character.dash && character.dx > GAME_RULES.dashSpeed)
+            else if (!character.dash && character.dashCooldown <= 0)
                 dash(character.dx / GAME_RULES.dashTimeScale)
         } else {
             character.dx += GAME_RULES.rhythmBoost
@@ -113,8 +117,12 @@
         if (character.dead)
             return
 
-        character.dx *= GAME_RULES.rhythmPenalty
-        character.dash = 0
+        if (special && !character.jumping) {
+            jump(0.7)
+        } else {
+            character.dash = 0
+            character.dx *= GAME_RULES.rhythmPenalty
+        }
     }
 
     function gameStart() {
@@ -132,18 +140,18 @@
     }
 
     function bonusDash() {
-        character.jumping = true
+        character.dx = Math.max(character.dx, GAME_RULES.dashSpeed)
         dash(2)
     }
 
     function hitSpike(target, spike) {
+        if (target !== character)
+            return
+
         if (character.dash) {
             Trigger("command-destroy-object", spike)
             return
         }
-
-        if (target !== character)
-            return
 
         character.dead = true
         character.dy = -50

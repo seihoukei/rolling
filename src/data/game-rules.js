@@ -5,6 +5,7 @@ const GAME_RULES = {
     dashSpeed : 50,
     dashTimeScale : 100,
     dashCooldown : 0.5,
+    jumpDashTime : 0.2,
     
     rhythmBoost : 5,    //additive
     rhythmPenalty : 0.9, //multiplicative
