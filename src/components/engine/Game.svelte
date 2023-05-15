@@ -54,7 +54,7 @@
 
 </script>
 
-<GameWorld {game} bind:world />
+<GameWorld bind:world />
 <GameBonuses {game} bind:bonuses />
 <GameShines bind:shines />
 <GameCharacters {game} bind:characters />

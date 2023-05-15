@@ -11,8 +11,6 @@
     let advances = 0
     let resetCooldown = MAX_RESET_COOLDOWN
 
-    export let game
-
     export let world = {
         gravity : 1,
         ground : GROUND_LEVEL,
