@@ -1,5 +1,5 @@
 <script>
-    import Game from "components/engine/Game.svelte"
+    import Game from "components/Game.svelte"
 
     let gameId = Math.random()
 </script>

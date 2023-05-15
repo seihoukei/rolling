@@ -16,15 +16,6 @@
         ground : GROUND_LEVEL,
         season : 0,
 
-        rhythm : {
-            rate : 1,
-            successStart : 0.4,
-            successEnd : 0.6,
-            current : 0,
-            state : 0,
-            last : 0,
-        },
-
         started : false,
         rules : true,
         over : false,
@@ -43,6 +34,7 @@
     registerTrigger("command-advance", advance)
     registerTrigger("command-keep-alive", keepAlive)
     registerTrigger("command-game-action", gameAction)
+    registerTrigger("rhythm-success", rhythmSuccess)
 
     registerTrigger("bonus-jump", bonusJump)
 
@@ -66,11 +58,6 @@
         advances++
         if (world.started) {
             resetCooldown -= time
-            world.rhythm.current += time
-            while (world.rhythm.current > world.rhythm.rate * 0.75) {
-                world.rhythm.current -= world.rhythm.rate * 0.5
-                world.rhythm.last = 0
-            }
         }
     }
 
@@ -100,7 +87,6 @@
 
         if (!world.started) {
             Trigger("command-game-start")
-            world.rhythm.current = -0.15
             world.started = true
             return
         }
@@ -110,28 +96,19 @@
             return
         }
 
-        world.rhythm.last = world.rhythm.current
-        if (world.rhythm.current > world.rhythm.rate * world.rhythm.successStart &&
-            world.rhythm.current < world.rhythm.rate * world.rhythm.successEnd) {
-            Trigger("rhythm-success", jump)
-            const median = (world.rhythm.successStart + world.rhythm.successEnd) / 2
-            const offset = Math.abs(world.rhythm.current / world.rhythm.rate - median)
-            world.score += 10 * (1 - offset) ** 2
-            world.rhythm.state = 1
-        } else {
-            Trigger("rhythm-failure", jump)
-            world.rhythm.state = -1
-        }
-        world.rhythm.current = 0
-
     }
 
     function bonusJump() {
         world.jumps += 3
     }
 
+    function rhythmSuccess(jump, offset) {
+        world.score += 10 * (1 - offset) ** 2
+    }
+
     function gameOver() {
         world.over = true
     }
+
 
 </script>

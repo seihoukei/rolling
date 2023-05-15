@@ -7,7 +7,7 @@
     const ROLL_FRAMES = 49
 
     $: world = game?.world ?? {}
-    $: rhythm = world?.rhythm ?? {}
+    $: rhythm = game?.rhythm ?? {}
 
     $: dead = character.dead ?? false
     $: still = character.dx === 0
