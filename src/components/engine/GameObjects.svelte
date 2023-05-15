@@ -32,6 +32,7 @@
 
         if (data.pickable) {
             object.dead = true
+            Trigger("command-add-shines", object.x, object.y, 1, 10)
         }
 
         Trigger(data.event, character, object)

@@ -20,6 +20,7 @@
             dy : 0,
             dash : 0,
             dashCooldown : 0,
+            nonJumpDashes : 0,
             size : 10,
             dead : false,
             jumping : false,

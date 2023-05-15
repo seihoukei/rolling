@@ -74,7 +74,7 @@
     }
 
     function jump(speedRate = 1) {
-        if (character.jumping && (character.dash > 0 || character.dashCooldown < 0))
+        if (character.jumping)
             return false
 
         character.dash = GAME_RULES.jumpDashTime
@@ -83,6 +83,8 @@
         character.jumping = true
         character.dx *= speedRate
         character.dy = - character.dx
+
+        character.nonJumpDashes = 0
 
         return true
     }
@@ -94,6 +96,8 @@
         character.jumping = true
         character.dy = 0
 
+        character.nonJumpDashes++
+
         return true
     }
 
@@ -102,7 +106,7 @@
             return
 
         if (special) {
-            if (!character.jumping)
+            if (!character.jumping || (character.dash <= 0 && character.dashCooldown > 0 && character.nonJumpDashes >= 3))
                 jump()
             else if (!character.dash && character.dashCooldown <= 0)
                 dash(character.dx / GAME_RULES.dashTimeScale)
