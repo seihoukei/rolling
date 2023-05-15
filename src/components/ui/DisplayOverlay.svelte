@@ -1,0 +1,76 @@
+<script>
+    export let game
+
+    $: world = game?.world ?? {}
+</script>
+
+{#if world.rules}
+    <div class="rules">
+        Click / Tap anywhere:
+        Catch the rhythm to ROLL!
+
+        Right-click / Tap right half:
+        JUMP!
+
+        The faster you ROLL
+        the higher you JUMP
+
+        READY?
+    </div>
+{:else}
+    <div class="stats">
+        Distance : {Math.floor(world.distance / 10)}
+        Score : {Math.floor(world.score)}
+    </div>
+    <div class="right stats">
+        {world.jumps} <img src="./resources/bonus/jump.png" class="icon" alt="jumps">
+    </div>
+{/if}
+
+<style>
+
+    div.stats {
+        pointer-events: none;
+        position: absolute;
+        left: 0;
+        top : 0;
+        white-space: pre-line;
+        font-size: 5vmin;
+        color : black;
+        z-index : 2;
+    }
+
+    div.stats.right {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        right : 0;
+        left : auto;
+        z-index : 2;
+    }
+
+    img.icon {
+        width : 1em;
+        height : 1em;
+    }
+
+    div.rules {
+        position: absolute;
+        left: 0;
+        right : 0;
+        top : 0;
+        bottom: 0;
+
+        color : black;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+
+        font-size: 5vmin;
+        white-space: pre-line;
+        z-index : 2;
+        padding-bottom: 5vmin;
+    }
+</style>
