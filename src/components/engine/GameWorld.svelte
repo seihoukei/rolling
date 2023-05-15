@@ -79,7 +79,7 @@
         }
     }
 
-    function gameAction(jump = false) {
+    function gameAction() {
         if (world.rules) {
             world.rules = false
             return
@@ -102,7 +102,7 @@
         world.jumps += 3
     }
 
-    function rhythmSuccess(jump, offset) {
+    function rhythmSuccess(special, offset) {
         world.score += 10 * (1 - offset) ** 2
     }
 

@@ -59,22 +59,22 @@
         }
     }
 
-    function rhythmSuccess(mustJump = false) {
+    function rhythmSuccess(special = false) {
         if (character.dead)
             return
 
-        if (!mustJump || !jump()) {
+        if (!special || !jump()) {
             character.dx += 5
         }
 
         Trigger("command-add-shines", character.x, character.y, 1, 10)
     }
 
-    function rhythmFailure(mustJump = false) {
+    function rhythmFailure(special = false) {
         if (character.dead)
             return
 
-        if (!mustJump || !jump(0.7)) {
+        if (!special || !jump(0.7)) {
             character.dx *= 0.9
         }
     }

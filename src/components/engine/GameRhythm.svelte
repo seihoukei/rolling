@@ -32,7 +32,7 @@
         rhythm.current = -0.15
     }
 
-    function gameAction(jump = false) {
+    function gameAction(special = false) {
         rhythm.last = rhythm.current
 
         const median = (rhythm.successStart + rhythm.successEnd) / 2
@@ -40,10 +40,10 @@
 
         if (rhythm.current > rhythm.rate * rhythm.successStart &&
             rhythm.current < rhythm.rate * rhythm.successEnd) {
-            Trigger("rhythm-success", jump, offset)
+            Trigger("rhythm-success", special, offset)
             rhythm.state = 1
         } else {
-            Trigger("rhythm-failure", jump, offset)
+            Trigger("rhythm-failure", special, offset)
             rhythm.state = -1
         }
 

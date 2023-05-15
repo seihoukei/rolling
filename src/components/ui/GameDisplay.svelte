@@ -13,22 +13,29 @@
     $: bonuses = game?.bonuses ?? []
     $: world = game?.world ?? {}
 
-    function tap(event, jump = false) {
+    function gameAction(special = false) {
+        Trigger("command-game-action", special)
+    }
+
+    function normalAction(event) {
         event.preventDefault()
         event.stopPropagation()
 
-        Trigger("command-game-action", jump)
+        gameAction()
     }
 
-    function jump(event) {
-        tap(event, true)
+    function specialAction(event) {
+        event.preventDefault()
+        event.stopPropagation()
+
+        gameAction(true)
     }
 
     function touchAction(event) {
         if (event.touches[0]?.clientX < window.innerWidth / 2) {
-            tap(event)
+            normalAction(event)
         } else {
-            tap(event, true)
+            specialAction(event)
         }
     }
 
@@ -36,8 +43,8 @@
 
 {#if game}
     <div class="container"
-         on:click={tap}
-         on:contextmenu={jump}
+         on:click={normalAction}
+         on:contextmenu={specialAction}
          on:touchstart={touchAction}
     >
         <DisplayCamera {game}>
