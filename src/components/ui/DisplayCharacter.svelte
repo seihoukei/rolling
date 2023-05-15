@@ -31,7 +31,6 @@
 <div class="character"
      class:still
      class:dead
-     class:canDash
      style={cssVariables}
 >
     {#if !dead}

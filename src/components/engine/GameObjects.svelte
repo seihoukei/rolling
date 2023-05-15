@@ -4,7 +4,6 @@
     import Trigger from "utility/trigger.js"
     import GAME_RULES from "data/game-rules.js"
 
-    export let game
     export let objects = []
 
     registerTrigger("command-spawn-object", spawnObject)

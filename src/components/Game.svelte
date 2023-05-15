@@ -57,7 +57,7 @@
 <GameRhythm bind:rhythm />
 
 <GameWorld bind:world />
-<GameObjects {game} bind:objects />
+<GameObjects bind:objects />
 <GameShines bind:shines />
 <GameCharacters {game} bind:characters />
 
