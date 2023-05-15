@@ -4,12 +4,9 @@
     import DisplayShine from "components/ui/DisplayShine.svelte"
     import DisplayBonus from "components/ui/DisplayBonus.svelte"
     import Trigger from "utility/trigger.js"
-    import registerTrigger from "utility/register-trigger.js"
     import DisplayOverlay from "components/ui/DisplayOverlay.svelte"
 
     export let game
-
-    registerTrigger("game-over", gameOver)
 
     $: characters = game?.characters ?? []
     $: shines = game?.shines ?? []
@@ -33,13 +30,6 @@
         } else {
             tap(event, true)
         }
-    }
-
-    function gameOver() {
-/*
-        if (!music.paused)
-            music.pause()
-*/
     }
 
 </script>
