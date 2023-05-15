@@ -2,13 +2,10 @@
     import registerTrigger from "utility/register-trigger.js"
     import Trigger from "utility/trigger.js"
     import GAME_SEASONS from "data/game-seasons.js"
-    import {tick} from "svelte"
     import GAME_OBJECTS from "data/game-objects.js"
 
-    const GROUND_LEVEL = -12
     const MAX_RESET_COOLDOWN = 2
 
-    let lastDoubleJump = 0
     let advances = 0
     let resetCooldown = MAX_RESET_COOLDOWN
 
@@ -22,27 +19,36 @@
         minSpikeDistance : 50,
         maxSpikeDistance : 150,
 
-        bonuses : ["score", "score", "score", "slow", "fast", "dash", "clone"],
+        spawns : [{
+            items : ["score", "score", "score", "slow", "fast", "dash", "clone"],
+            minDistance : 50,
+            maxDistance : 100,
+        }, {
+            items : ["spike"],
+            minDistance : 50,
+            maxDistance : 150,
+        }],
 
         started : false,
         rules : true,
         over : false,
 
         distance : 0,
-        nextBonus : 100,
-        nextSpike : 200,
-        nextSeason : GAME_SEASONS[0].length,
+        nextSeason : 0,
 
         score : 0,
     }
 
+    setSeason(0)
+
     registerTrigger("distance-reached", distanceReached)
     registerTrigger("game-over", gameOver)
+    registerTrigger("rhythm-success", rhythmSuccess)
+    registerTrigger("object-destroyed", objectDestroyed)
+
     registerTrigger("command-advance", advance)
     registerTrigger("command-keep-alive", keepAlive)
     registerTrigger("command-game-action", gameAction)
-    registerTrigger("rhythm-success", rhythmSuccess)
-    registerTrigger("object-destroyed", objectDestroyed)
 
     function keepAlive() {
         resetCooldown = MAX_RESET_COOLDOWN
@@ -55,26 +61,32 @@
         }
     }
 
+    function setSeason(index) {
+        world.season = index
+
+        // apply season data here
+
+        world.nextSeason += GAME_SEASONS[world.season].length
+
+        world.spawnDistances = world.spawns
+            .map(x => world.distance + x.minDistance + (x.maxDistance - x.minDistance) * Math.random())
+    }
+
     function distanceReached(x) {
         if (x > world.distance)
             world.distance = x
 
-        if (world.distance > world.nextBonus) {
-            Trigger("command-spawn-object", world.bonuses, world.nextBonus + 100)
-            world.nextBonus += Math.random() * 100 + 50
-        }
-
-        if (world.distance > world.nextSpike) {
-            Trigger("command-spawn-object", "spike", world.nextSpike + 100)
-            world.nextSpike += Math.random() * (world.maxSpikeDistance - world.minSpikeDistance) + world.minSpikeDistance
-        }
+        world.spawnDistances.forEach((distance, index) => {
+            if (world.distance > distance) {
+                const data = world.spawns[index]
+                Trigger("command-spawn-object", data.items , world.distance + 100)
+                world.spawnDistances[index] += data.minDistance + (data.maxDistance - data.minDistance) * Math.random()
+            }
+        })
 
         if (world.distance > world.nextSeason) {
-            world.season++
-            if (world.season >= GAME_SEASONS.length)
-                world.season = 0
-
-            world.nextSeason += GAME_SEASONS[world.season].length
+            const nextSeason = (world.season + 1) % GAME_SEASONS.length
+            setSeason(nextSeason)
         }
     }
 
