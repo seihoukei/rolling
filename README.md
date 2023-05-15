@@ -2,3 +2,5 @@
 
 Add 120BPM track as public/resources/bgm/music.mp3
 Used for testing: Fury weekend - Chasing stars.
+
+Live test at https://test.seihoukei.games/rolling/
