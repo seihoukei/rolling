@@ -1,16 +1,16 @@
 <script>
     import {tick} from "svelte"
     import Trigger from "utility/trigger-svelte.js"
+    import TRIGGER_PRIORITIES from "data/trigger-priorities.js"
 
     export let firstArray
     export let secondArray
     export let event = "collision"
 
     Trigger.on("command-advance", advance)
+        .setPriority(TRIGGER_PRIORITIES.ADVANCE.COLLISION)
 
     async function advance() {
-        await tick()
-
         const liveFirst = firstArray?.filter(x => !x.dead) ?? []
         const liveSecond = secondArray?.filter(x => !x.dead) ?? []
 

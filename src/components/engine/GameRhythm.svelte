@@ -1,5 +1,6 @@
 <script>
     import Trigger from "utility/trigger-svelte.js"
+    import TRIGGER_PRIORITIES from "data/trigger-priorities.js"
 
     export let rhythm = {
         rate : 1,
@@ -13,6 +14,8 @@
     let started = false
 
     Trigger.on("command-advance", advance)
+        .setPriority(TRIGGER_PRIORITIES.ADVANCE.RHYTHM)
+
     Trigger.on("command-game-start", gameStart)
     Trigger.on("command-game-action", gameAction)
 

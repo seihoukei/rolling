@@ -2,10 +2,12 @@
     import GAME_SEASONS from "data/game-seasons.js"
 
     import Trigger from "utility/trigger-svelte.js"
+    import TRIGGER_PRIORITIES from "data/trigger-priorities.js"
 
     export let game
 
     Trigger.on("command-advance", advance)
+        .setPriority(TRIGGER_PRIORITIES.ADVANCE.DISPLAY)
 
     let camera = {
         x : 0,

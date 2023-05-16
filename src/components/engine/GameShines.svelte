@@ -3,6 +3,7 @@
 
     import {tick} from "svelte"
     import Trigger from "utility/trigger-svelte.js"
+    import TRIGGER_PRIORITIES from "data/trigger-priorities.js"
 
     const SHINE_SPEED = 40
     const SHINE_SIZE = 2
@@ -12,6 +13,7 @@
 
     Trigger.on("command-add-shines", spawnShines)
     Trigger.on("command-advance", advance)
+        .setPriority(TRIGGER_PRIORITIES.ADVANCE.CLEANUP)
 
     function spawnShines(x, y, time, amount) {
         const spawnAmount = Math.min(MAX_SHINES - shines.length, amount)
@@ -30,7 +32,6 @@
     }
 
     async function advance() {
-        await tick()
         shines = shines.filter(x => x.progress < x.time)
     }
 </script>

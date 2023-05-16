@@ -5,6 +5,7 @@ class TriggerEventHandler {
     args = []
     callback = null
     once = false
+    #priority = 0
     
     constructor(event = null, callback = null, args = []) {
         if (event === null) {
@@ -31,16 +32,28 @@ class TriggerEventHandler {
     execute(...args) {
         this.callback(...this.args, ...args)
     }
+    
+    setPriority(priority) {
+        this.#priority = priority
+        Trigger.updatePriorities(this.#event)
+        return this
+    }
+    
+    getPriority() {
+        return this.#priority
+    }
 }
 
 const Trigger = Object.assign(function(event, ...args) {
-    Trigger._processHandlers(Trigger._mode, event, args)
+    Trigger._processHandlers(event, args)
     
 }, {
     _handlers : new Map(),
     
     _executing : false,
     _executionQueue : [],
+    
+    _prioritiesUsed : false,
     
     _executeQueue() {
         if (this._executing)
@@ -67,7 +80,7 @@ const Trigger = Object.assign(function(event, ...args) {
         this._executeQueue()
     },
     
-    _processHandlers(method, event, args) {
+    _processHandlers(event, args) {
         const handlers = this._handlers.get(event)
         if (handlers)
             for (let handler of handlers) {
@@ -79,8 +92,10 @@ const Trigger = Object.assign(function(event, ...args) {
     
     attachHandler(handler) {
         const event = handler.getEvent()
-        const eventHandlers = this._handlers.get(event) ?? new Set()
-        eventHandlers.add(handler)
+        const eventHandlers = this._handlers.get(event) ?? []
+        eventHandlers.push(handler)
+        if (this._prioritiesUsed)
+            this.updatePriorities(handler)
         this._handlers.set(event, eventHandlers)
     },
     
@@ -89,7 +104,7 @@ const Trigger = Object.assign(function(event, ...args) {
         
         const event = handler.getEvent()
         const eventHandlers = this._handlers.get(event)
-        eventHandlers?.delete(handler)
+        this._handlers.set(event, eventHandlers.filter(x => x !== handler))
     },
     
     createEventHandler (event, callback, ...args) {
@@ -98,22 +113,33 @@ const Trigger = Object.assign(function(event, ...args) {
         return handler
     },
     
-    on(event, callback, ...args) {
-        let handler = null
-        
-        onMount(() => {
-            handler = this.createEventHandler(event, callback, ...args)
-        })
-        
-        onDestroy(() => {
-            handler?.cancel?.()
-        })
-        
-        return handler
+    updatePriorities(event) {
+        this._prioritiesUsed = true
+        const handlers = this._handlers.get(event) ?? []
+        handlers.sort((x, y) => x.getPriority() - y.getPriority())
     },
     
-    once (event, callback, ...args) {
-        const handler = this.on(event, callback, ...args)
+    on(event, callback, ...args) {
+        const promise = new Promise(resolve => {
+            let handler = null
+    
+            onMount(() => {
+                handler = this.createEventHandler(event, callback, ...args)
+                resolve(handler)
+            })
+    
+            onDestroy(() => {
+                handler?.cancel?.()
+            })
+        })
+        
+        promise.setPriority = (priority) => promise.then(x => x.setPriority(priority))
+        
+        return promise
+    },
+    
+    async once (event, callback, ...args) {
+        const handler = await this.on(event, callback, ...args)
         handler.once = true
         return handler
     },

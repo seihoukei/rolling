@@ -2,11 +2,14 @@
     import GAME_RULES from "data/game-rules.js"
 
     import Trigger from "utility/trigger-svelte.js"
+    import TRIGGER_PRIORITIES from "data/trigger-priorities.js"
 
     export let game
     export let character = {}
 
     Trigger.on("command-advance", advance)
+        .setPriority(TRIGGER_PRIORITIES.ADVANCE.MOVEMENT)
+
     Trigger.on("rhythm-success", rhythmSuccess)
     Trigger.on("rhythm-failure", rhythmFailure)
     Trigger.on("command-game-start", gameStart)

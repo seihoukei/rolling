@@ -1,11 +1,13 @@
 <script>
     import Trigger from "utility/trigger-svelte.js"
+    import TRIGGER_PRIORITIES from "data/trigger-priorities.js"
 
     export let shine
 
     const SHINE_GRAVITY = 1
 
     Trigger.on("command-advance", advance)
+        .setPriority(TRIGGER_PRIORITIES.ADVANCE.MOVEMENT)
 
     function advance(time = 0) {
         if (shine.progress > shine.time)

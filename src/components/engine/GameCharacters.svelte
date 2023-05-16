@@ -4,11 +4,14 @@
     import GAME_RULES from "data/game-rules.js"
 
     import Trigger from "utility/trigger-svelte.js"
+    import TRIGGER_PRIORITIES from "data/trigger-priorities.js"
 
     export let game
     export let characters = []
 
     Trigger.on("command-advance", advance)
+        .setPriority(TRIGGER_PRIORITIES.ADVANCE.CLEANUP)
+
     Trigger.on("command-clone-character", cloneCharacter)
     Trigger.on("command-create-character", createCharacter)
     Trigger.on("bonus-clone", bonusClone)
