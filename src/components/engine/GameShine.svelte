@@ -1,11 +1,11 @@
 <script>
-    import registerTrigger from "utility/register-trigger.js"
+    import Trigger from "utility/trigger-svelte.js"
 
     export let shine
 
     const SHINE_GRAVITY = 1
 
-    registerTrigger("command-advance", advance)
+    Trigger.on("command-advance", advance)
 
     function advance(time = 0) {
         if (shine.progress > shine.time)

@@ -1,20 +1,20 @@
 <script>
-    import registerTrigger from "utility/register-trigger.js"
-    import Trigger from "utility/trigger.js"
     import GAME_RULES from "data/game-rules.js"
+
+    import Trigger from "utility/trigger-svelte.js"
 
     export let game
     export let character = {}
 
-    registerTrigger("command-advance", advance)
-    registerTrigger("rhythm-success", rhythmSuccess)
-    registerTrigger("rhythm-failure", rhythmFailure)
-    registerTrigger("command-game-start", gameStart)
+    Trigger.on("command-advance", advance)
+    Trigger.on("rhythm-success", rhythmSuccess)
+    Trigger.on("rhythm-failure", rhythmFailure)
+    Trigger.on("command-game-start", gameStart)
 
-    registerTrigger("bonus-fast", bonusFast)
-    registerTrigger("bonus-slow", bonusSlow)
-    registerTrigger("bonus-dash", bonusDash)
-    registerTrigger("hit-spike", hitSpike)
+    Trigger.on("bonus-fast", bonusFast)
+    Trigger.on("bonus-slow", bonusSlow)
+    Trigger.on("bonus-dash", bonusDash)
+    Trigger.on("hit-spike", hitSpike)
 
     $: world = game?.world ?? {}
 

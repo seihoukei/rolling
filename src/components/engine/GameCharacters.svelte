@@ -1,16 +1,17 @@
 <script>
-    import registerTrigger from "utility/register-trigger.js"
     import GameCharacter from "components/engine/GameCharacter.svelte"
-    import Trigger from "utility/trigger.js"
+
     import GAME_RULES from "data/game-rules.js"
+
+    import Trigger from "utility/trigger-svelte.js"
 
     export let game
     export let characters = []
 
-    registerTrigger("command-advance", advance)
-    registerTrigger("command-clone-character", cloneCharacter)
-    registerTrigger("command-create-character", createCharacter)
-    registerTrigger("bonus-clone", bonusClone)
+    Trigger.on("command-advance", advance)
+    Trigger.on("command-clone-character", cloneCharacter)
+    Trigger.on("command-create-character", createCharacter)
+    Trigger.on("bonus-clone", bonusClone)
 
     function createCharacter() {
         const character = {

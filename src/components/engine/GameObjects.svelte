@@ -1,14 +1,14 @@
 <script>
-    import registerTrigger from "utility/register-trigger.js"
     import GAME_OBJECTS from "data/game-objects.js"
-    import Trigger from "utility/trigger.js"
     import GAME_RULES from "data/game-rules.js"
+
+    import Trigger from "utility/trigger-svelte.js"
 
     export let objects = []
 
-    registerTrigger("command-spawn-object", spawnObject)
-    registerTrigger("command-hit-object", hitObject)
-    registerTrigger("command-destroy-object", destroyObject)
+    Trigger.on("command-spawn-object", spawnObject)
+    Trigger.on("command-hit-object", hitObject)
+    Trigger.on("command-destroy-object", destroyObject)
 
     function spawnObject(list, x) {
         const type = typeof list === 'string' ? list : list[Math.random() * list.length | 0]

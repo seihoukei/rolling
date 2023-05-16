@@ -1,5 +1,6 @@
 <script>
     import DisplayRhythm from "components/ui/DisplayRhythm.svelte"
+
     import GAME_RULES from "data/game-rules.js"
 
     export let character

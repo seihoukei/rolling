@@ -1,10 +1,11 @@
 <script>
-    import registerTrigger from "utility/register-trigger.js"
     import GAME_SEASONS from "data/game-seasons.js"
+
+    import Trigger from "utility/trigger-svelte.js"
 
     export let game
 
-    registerTrigger("command-advance", advance)
+    Trigger.on("command-advance", advance)
 
     let camera = {
         x : 0,

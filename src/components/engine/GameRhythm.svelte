@@ -1,6 +1,5 @@
 <script>
-    import registerTrigger from "utility/register-trigger.js"
-    import Trigger from "utility/trigger.js"
+    import Trigger from "utility/trigger-svelte.js"
 
     export let rhythm = {
         rate : 1,
@@ -13,9 +12,9 @@
 
     let started = false
 
-    registerTrigger("command-advance", advance)
-    registerTrigger("command-game-start", gameStart)
-    registerTrigger("command-game-action", gameAction)
+    Trigger.on("command-advance", advance)
+    Trigger.on("command-game-start", gameStart)
+    Trigger.on("command-game-action", gameAction)
 
     function advance(time) {
         if (started) {

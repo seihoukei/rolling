@@ -1,7 +1,8 @@
 <script>
-    import registerTrigger from "utility/register-trigger.js"
-    import {tick} from "svelte"
     import GameShine from "components/engine/GameShine.svelte"
+
+    import {tick} from "svelte"
+    import Trigger from "utility/trigger-svelte.js"
 
     const SHINE_SPEED = 40
     const SHINE_SIZE = 2
@@ -9,8 +10,8 @@
 
     export let shines = []
 
-    registerTrigger("command-add-shines", spawnShines)
-    registerTrigger("command-advance", advance)
+    Trigger.on("command-add-shines", spawnShines)
+    Trigger.on("command-advance", advance)
 
     function spawnShines(x, y, time, amount) {
         const spawnAmount = Math.min(MAX_SHINES - shines.length, amount)

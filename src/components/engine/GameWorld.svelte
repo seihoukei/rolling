@@ -1,8 +1,8 @@
 <script>
-    import registerTrigger from "utility/register-trigger.js"
-    import Trigger from "utility/trigger.js"
     import GAME_SEASONS from "data/game-seasons.js"
     import GAME_OBJECTS from "data/game-objects.js"
+
+    import Trigger from "utility/trigger-svelte.js"
 
     const MAX_RESET_COOLDOWN = 2
 
@@ -41,14 +41,14 @@
 
     setSeason(0)
 
-    registerTrigger("distance-reached", distanceReached)
-    registerTrigger("game-over", gameOver)
-    registerTrigger("rhythm-success", rhythmSuccess)
-    registerTrigger("object-destroyed", objectDestroyed)
+    Trigger.on("distance-reached", distanceReached)
+    Trigger.on("game-over", gameOver)
+    Trigger.on("rhythm-success", rhythmSuccess)
+    Trigger.on("object-destroyed", objectDestroyed)
 
-    registerTrigger("command-advance", advance)
-    registerTrigger("command-keep-alive", keepAlive)
-    registerTrigger("command-game-action", gameAction)
+    Trigger.on("command-advance", advance)
+    Trigger.on("command-keep-alive", keepAlive)
+    Trigger.on("command-game-action", gameAction)
 
     function keepAlive() {
         resetCooldown = MAX_RESET_COOLDOWN

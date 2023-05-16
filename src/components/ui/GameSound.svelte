@@ -1,10 +1,10 @@
 <script>
     import {onDestroy, onMount} from "svelte"
-    import registerTrigger from "utility/register-trigger.js"
+    import Trigger from "utility/trigger-svelte.js"
 
-    registerTrigger("command-game-start", startMusic)
-    registerTrigger("game-over", stopMusic)
-    registerTrigger("command-play-sound", playSound)
+    Trigger.on("command-game-start", startMusic)
+    Trigger.on("game-over", stopMusic)
+    Trigger.on("command-play-sound", playSound)
 
     const audio = {}
     onMount(() => {

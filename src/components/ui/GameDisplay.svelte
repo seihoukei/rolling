@@ -2,9 +2,10 @@
     import DisplayCamera from "components/ui/DisplayCamera.svelte"
     import DisplayCharacter from "components/ui/DisplayCharacter.svelte"
     import DisplayShine from "components/ui/DisplayShine.svelte"
-    import Trigger from "utility/trigger.js"
     import DisplayOverlay from "components/ui/DisplayOverlay.svelte"
     import DisplayObject from "components/ui/DisplayObject.svelte"
+
+    import Trigger from "utility/trigger-svelte.js"
 
     export let game
 

@@ -1,19 +1,19 @@
 <script>
-    import Trigger from "utility/trigger.js"
-    import registerTrigger from "utility/register-trigger.js"
     import GameDisplay from "components/ui/GameDisplay.svelte"
     import GameCharacters from "components/engine/GameCharacters.svelte"
     import GameShines from "components/engine/GameShines.svelte"
     import GameObjects from "components/engine/GameObjects.svelte"
     import GameWorld from "components/engine/GameWorld.svelte"
-    import {onDestroy, onMount, tick} from "svelte"
     import GameCollisions from "components/engine/GameCollisions.svelte"
     import GameSound from "components/ui/GameSound.svelte"
     import GameRhythm from "components/engine/GameRhythm.svelte"
 
+    import {onDestroy, onMount, tick} from "svelte"
+    import Trigger from "utility/trigger-svelte.js"
+
     export let gameId
 
-    registerTrigger("command-reset-game", resetGame)
+    Trigger.on("command-reset-game", resetGame)
 
     let characters
     let objects

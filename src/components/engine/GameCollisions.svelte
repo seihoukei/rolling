@@ -1,13 +1,12 @@
 <script>
-    import registerTrigger from "utility/register-trigger.js"
     import {tick} from "svelte"
-    import Trigger from "utility/trigger.js"
+    import Trigger from "utility/trigger-svelte.js"
 
     export let firstArray
     export let secondArray
     export let event = "collision"
 
-    registerTrigger("command-advance", advance)
+    Trigger.on("command-advance", advance)
 
     async function advance() {
         await tick()
