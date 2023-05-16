@@ -129,6 +129,8 @@
     }
 
     function bonusScore() {
+        world.multiplier += 1
+        world.multiplier = Math.min(5, world.multiplier)
         world.score += Math.floor(1 + world.multiplier) * 100
     }
 

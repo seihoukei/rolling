@@ -12,8 +12,11 @@
     export let shines = []
 
     Trigger.on("command-add-shines", spawnShines)
+    Trigger.on("object-picked-up", objectPicked)
+
     Trigger.on("command-advance", advance)
         .setPriority(TRIGGER_PRIORITIES.ADVANCE.CLEANUP)
+
 
     function spawnShines(x, y, time, amount) {
         const spawnAmount = Math.min(MAX_SHINES - shines.length, amount)
@@ -29,6 +32,10 @@
             shines.push(shine)
         }
         shines = shines
+    }
+
+    function objectPicked(object) {
+        spawnShines(object.x, object.y, 1, 10)
     }
 
     async function advance() {

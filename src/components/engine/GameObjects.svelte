@@ -32,7 +32,7 @@
 
         if (data.pickable) {
             object.dead = true
-            Trigger("command-add-shines", object.x, object.y, 1, 10)
+            Trigger("object-picked-up", object)
         }
 
         Trigger(data.event, character, object)

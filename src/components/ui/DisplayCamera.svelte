@@ -3,6 +3,7 @@
 
     import Trigger from "utility/trigger-svelte.js"
     import TRIGGER_PRIORITIES from "data/trigger-priorities.js"
+    import CameraTexts from "components/ui/CameraTexts.svelte"
 
     export let game
 
@@ -63,6 +64,7 @@
 </script>
 
 <div class="camera" style={cssVariables}>
+    <CameraTexts {camera} />
     <slot />
 </div>
 

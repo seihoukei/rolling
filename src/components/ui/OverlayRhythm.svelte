@@ -51,7 +51,9 @@
         <div class="bar">
             <div class="bar-bg"></div>
             <div class="bar-fg last"></div>
-            <div class="bar-fg current"></div>
+            {#if !over}
+                <div class="bar-fg current"></div>
+            {/if}
         </div>
     </div>
     <div class="reaction"></div>

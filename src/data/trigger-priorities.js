@@ -5,6 +5,7 @@ const TRIGGER_PRIORITIES = {
         COLLISION: 20,
         CLEANUP: 30,
         DISPLAY: 40,
+        DISPLAY_CLEANUP: 50,
     }
 }
 
