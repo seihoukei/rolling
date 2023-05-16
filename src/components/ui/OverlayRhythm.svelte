@@ -1,9 +1,5 @@
 <script>
-    import Trigger from "utility/trigger-svelte.js"
-
     export let game
-
-    let dancers = 0
 
     const stateImages = {
         [-2] : "../resources/rhythm/angry.png",
@@ -12,15 +8,13 @@
         [1] : "../resources/rhythm/great.gif",
     }
 
-    Trigger.on("rhythm-success", rhythmSuccess)
-    Trigger.on("rhythm-failure", rhythmFailure)
-
     $: rhythm = game?.rhythm ?? {}
     $: world = game?.world ?? {}
 
     $: over = world.over
     $: started = world.started
     $: nobongo = !started || over
+    $: dancers = world.multiplier
 
     $: repeatStart = 100/3
     $: repeatEnd = 100
@@ -39,14 +33,6 @@
         --rhythm-last-position: ${lastPosition}%;
     `
 
-    function rhythmSuccess(special, offset) {
-        dancers += 2 * (0.1 - offset)
-        dancers = Math.min(5, dancers)
-    }
-
-    function rhythmFailure() {
-        dancers = Math.max(0, dancers - 1)
-    }
 </script>
 
 <div class="container"

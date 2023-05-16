@@ -37,6 +37,7 @@
         nextSeason : 0,
 
         score : 0,
+        multiplier : 0,
     }
 
     setSeason(0)
@@ -44,7 +45,9 @@
     Trigger.on("distance-reached", distanceReached)
     Trigger.on("game-over", gameOver)
     Trigger.on("rhythm-success", rhythmSuccess)
+    Trigger.on("rhythm-failure", rhythmFailure)
     Trigger.on("object-destroyed", objectDestroyed)
+    Trigger.on("bonus-score", bonusScore)
 
     Trigger.on("command-advance", advance)
     Trigger.on("command-keep-alive", keepAlive)
@@ -110,12 +113,23 @@
     }
 
     function rhythmSuccess(special, offset) {
-        world.score += 10 * (1 - offset) ** 2
+        world.multiplier += 2 * Math.max(0, 0.1 - offset)
+        world.multiplier = Math.min(5, world.multiplier)
+        world.score += Math.floor(1 + world.multiplier) * 10 * (1 - offset) ** 2
+    }
+
+    function rhythmFailure(special, offset) {
+        world.multiplier -= 1
+        world.multiplier = Math.max(0, world.multiplier)
     }
 
     function objectDestroyed(object) {
         const score = GAME_OBJECTS[object.type]?.score ?? 0
-        world.score += score
+        world.score += Math.floor(1 + world.multiplier) * score
+    }
+
+    function bonusScore() {
+        world.score += Math.floor(1 + world.multiplier) * 100
     }
 
     function gameOver() {
