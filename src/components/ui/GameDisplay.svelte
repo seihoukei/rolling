@@ -40,13 +40,25 @@
         }
     }
 
+    function mouseAction(event) {
+        if (event.button) {
+            specialAction(event)
+        } else {
+            normalAction(event)
+        }
+    }
+
+    function cancelEvent(event) {
+        event.preventDefault()
+        event.stopPropagation()
+    }
 </script>
 
 {#if game}
     <div class="container"
-         on:click={normalAction}
-         on:contextmenu={specialAction}
+         on:mousedown={mouseAction}
          on:touchstart={touchAction}
+         on:contextmenu={cancelEvent}
     >
         <DisplayCamera {game}>
             {#each objects as object}
