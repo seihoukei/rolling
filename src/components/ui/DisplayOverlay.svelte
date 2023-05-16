@@ -1,7 +1,10 @@
 <script>
+    import OverlayRhythm from "components/ui/OverlayRhythm.svelte"
+
     export let game
 
     $: world = game?.world ?? {}
+    $: rhythm = game?.rhythm ?? {}
 </script>
 
 {#if world.rules}
@@ -22,6 +25,7 @@
         Distance : {Math.floor(world.distance / 10)}
         Score : {Math.floor(world.score)}
     </div>
+    <OverlayRhythm {game} />
 {/if}
 
 <style>

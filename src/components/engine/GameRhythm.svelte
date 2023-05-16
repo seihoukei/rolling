@@ -12,29 +12,34 @@
     }
 
     let started = false
+    let over = false
 
     Trigger.on("command-advance", advance)
         .setPriority(TRIGGER_PRIORITIES.ADVANCE.RHYTHM)
 
     Trigger.on("command-game-start", gameStart)
     Trigger.on("command-game-action", gameAction)
+    Trigger.on("game-over", gameOver)
 
     function advance(time) {
-        if (started) {
-            rhythm.current += time
-            while (rhythm.current > rhythm.rate * 0.75) {
-                rhythm.current -= rhythm.rate * 0.5
-                rhythm.last = 0
-            }
+        if (!started || over)
+            return
+
+        rhythm.current += time
+        while (rhythm.current > rhythm.rate * 0.75) {
+            rhythm.current -= rhythm.rate * 0.5
+//            rhythm.last = 0
         }
     }
 
     function gameStart() {
         started = true
-        rhythm.current = -0.15
     }
 
     function gameAction(special = false) {
+        if (!started || over)
+            return
+
         rhythm.last = rhythm.current
 
         const median = (rhythm.successStart + rhythm.successEnd) / 2
@@ -52,5 +57,9 @@
         rhythm.current = 0
     }
 
+    function gameOver() {
+        rhythm.state = -2
+        over = true
+    }
 
 </script>

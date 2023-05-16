@@ -14,6 +14,11 @@
         y : 0,
     }
 
+    let cameraTarget = {
+        x : 0,
+        y : 0,
+    }
+
     $: world = game.world ?? {}
     $: characters = game.characters ?? []
 
@@ -27,27 +32,22 @@
         const liveCharacters = characters.filter(x => !x.dead)
 
         if (liveCharacters.length) {
-            const cameraTarget = {
-                x: 0,
-                y: 0,
-            }
-
             camera.followSpeed = Math.min(0.6, camera.followSpeed + 0.02 * time)
 
             const lastCharacter = liveCharacters
                 .reduce((v,x) => x.x < v.x ? x : v)
 
-            cameraTarget.x += lastCharacter.x + 40
-            cameraTarget.y += lastCharacter.y + 10
-
-            tweenCameraAxis(camera, cameraTarget, "x")
-            tweenCameraAxis(camera, cameraTarget, "y")
-
-            if (window.innerHeight > window.innerWidth)
-                camera.y = Math.min(camera.y, -50 - (window.innerHeight / window.innerWidth - 1) * 100)
-            else
-                camera.y = Math.min(camera.y, -50 + (1 - window.innerHeight / window.innerWidth) * 50)
+            cameraTarget.x = lastCharacter.x + 40
+            cameraTarget.y = lastCharacter.y + 10
         }
+
+        tweenCameraAxis(camera, cameraTarget, "x")
+        tweenCameraAxis(camera, cameraTarget, "y")
+
+        if (window.innerHeight > window.innerWidth)
+            camera.y = Math.min(camera.y, -50 - (window.innerHeight / window.innerWidth - 1) * 100)
+        else
+            camera.y = Math.min(camera.y, -50 + (1 - window.innerHeight / window.innerWidth) * 50)
     }
 
     function tweenCameraAxis(camera, target, axis) {

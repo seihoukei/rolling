@@ -34,7 +34,9 @@
 
     function frame() {
         const now = performance.now()
-        const delta = (now - lastTime) / 1000
+        let delta = (now - lastTime) / 1000
+        if (delta > rhythm?.rate)
+            delta = delta % rhythm.rate
         Trigger("command-advance", delta)
         lastTime = now
         animationFrame = requestAnimationFrame(frame)

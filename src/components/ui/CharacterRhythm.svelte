@@ -4,8 +4,8 @@
     $: cssVariables = `
         --rhythm-start:${(rhythm.successStart * 100).toFixed(2)}%;
         --rhythm-end:${rhythm.successEnd * 100}%;
-        --rhythm-current:${rhythm.current / rhythm.rate * 100}%;
-        --rhythm-last:${rhythm.last / rhythm.rate * 100}%;
+        --rhythm-current:${(1 - rhythm.current / rhythm.rate) * 125}%;
+        --rhythm-last:${(1 - rhythm.last / rhythm.rate) * 125}%;
     `
 </script>
 
@@ -49,7 +49,7 @@
         bottom : 0;
         border-radius: 50%;
 
-        background: radial-gradient(closest-side, #FFFF5500,#FFFF5500,#FFFF55FF);
+        background: radial-gradient(closest-side, #FFFF5500, #FFFF5500 80%, #FFFF55FF 80%, #FFFF5544 90%, #FFFF5500);
         transform: scale(var(--rhythm-current), var(--rhythm-current));
     }
 
@@ -61,16 +61,15 @@
         bottom : 0;
         border-radius: 50%;
 
-        background: radial-gradient(closest-side, #FFFFFF00,#FFFFFF00,#FFFFFF88);
         transform: scale(var(--rhythm-last), var(--rhythm-last));
     }
 
     div.good {
-        background: radial-gradient(closest-side, #88FF5500,#88FF5500,#88FF55FF);
+        background: radial-gradient(closest-side, #55FF5500, #55FF5500 80%, #55FF55FF 80%, #55FF5544 90%, #55FF5500);
     }
 
     div.bad {
-        background: radial-gradient(closest-side, #FF885500,#FF885500,#FF8855FF);
+        background: radial-gradient(closest-side, #FF555500, #FF555500 80%, #FF5555FF 80%, #FF555544 90%, #FF555500);
     }
 
 

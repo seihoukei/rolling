@@ -50,6 +50,14 @@
     function advance() {
         if (characters.length && characters.every(x => x.dead))
             Trigger("game-over")
+
+        const lastCharacter = characters
+            .filter(x => !x.dead)
+            .reduce((v,x) => x.x < v.x ? x : v, {x : Infinity})
+
+        for (const character of characters) {
+            character.last = lastCharacter === character
+        }
     }
 
 </script>
