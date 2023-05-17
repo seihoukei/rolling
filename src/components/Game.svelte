@@ -54,7 +54,7 @@
 
 </script>
 
-<GameRhythm bind:rhythm />
+<GameRhythm {game} bind:rhythm />
 
 <GameWorld bind:world />
 <GameObjects bind:objects />

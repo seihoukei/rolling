@@ -33,6 +33,8 @@
     }
 
     function touchAction(event) {
+        if (event.target.classList.contains("settings"))
+            return
         if (event.touches[0]?.clientX < window.innerWidth / 2) {
             normalAction(event)
         } else {
@@ -41,6 +43,8 @@
     }
 
     function mouseAction(event) {
+        if (event.target.classList.contains("settings"))
+            return
         if (event.button) {
             specialAction(event)
         } else {

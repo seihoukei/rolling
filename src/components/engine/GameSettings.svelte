@@ -4,8 +4,7 @@
     const DEFAULT_SETTINGS = {
         bgmVolume : 0.5,
         soundVolume : 0.5,
-        muteBgm : false,
-        muteSound : false,
+        rhythmOffset : 0.35,
     }
 
     export let settings = loadSettings()

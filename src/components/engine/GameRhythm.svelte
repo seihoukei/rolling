@@ -2,15 +2,19 @@
     import Trigger from "utility/trigger-svelte.js"
     import TRIGGER_PRIORITIES from "data/trigger-priorities.js"
 
+    export let game
+
     export let rhythm = {
         rate : 0.5,
-        offset : 0.35,
         successStart : 0.5,
         successEnd : 0.8,
         current : 0.5,
         state : 0,
         last : 0,
     }
+
+    $: settings = game?.settings ?? {}
+    $: offset = settings.rhythmOffset ?? 0.35
 
     let started = false
     let over = false
@@ -26,7 +30,7 @@
         if (!started || over)
             return
 
-        rhythm.current = ((time + rhythm.offset) % rhythm.rate) / rhythm.rate
+        rhythm.current = ((time + offset) % rhythm.rate) / rhythm.rate
     }
 
     function gameStart() {

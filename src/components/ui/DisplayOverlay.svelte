@@ -1,13 +1,23 @@
 <script>
     import OverlayRhythm from "components/ui/OverlayRhythm.svelte"
+    import DisplaySettings from "components/ui/DisplaySettings.svelte"
 
     export let game
 
     $: world = game?.world ?? {}
     $: rhythm = game?.rhythm ?? {}
+
+    let displaySettings = false
+
+    function showSettings() {
+        displaySettings = true
+    }
 </script>
 
-{#if world.rules}
+{#if displaySettings}
+    <DisplaySettings {game} bind:displaySettings />
+{:else if world.rules}
+    <div class="settings button" on:mouseup={showSettings}>Settings</div>
     <div class="rules">
         Left click or tap left half to ROLL!
 
@@ -59,5 +69,18 @@
         padding: 5vmin;
 
         border-radius: 10vmin;
+    }
+
+    div.button {
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-size: 4vmin;
+        border-radius: 4vmin;
+        padding: 2vmin 5vmin;
+        background-color: #222222;
+        color: #CCCCCC;
+        cursor: pointer;
+        z-index: 10;
     }
 </style>

@@ -47,7 +47,7 @@
         bgm.analyser.connect(bgm.gain)
         bgm.gain.connect(bgm.context.destination)
 
-        bgm.gain.gain.setValueAtTime(settings.muteBgm ? 0 : settings.bgmVolume, bgm.context.currentTime)
+        bgm.gain.gain.setValueAtTime(settings.bgmVolume, bgm.context.currentTime)
         //audio.music.volume = settings.bgmVolume
 
         audio.music?.play()
@@ -61,7 +61,7 @@
         if (!audio[name])
             return
 
-        audio[name].volume = settings.muteSound ? 0 : settings.soundVolume
+        audio[name].volume = settings.soundVolume
 
         audio[name].currentTime = 0
         audio[name].play()
