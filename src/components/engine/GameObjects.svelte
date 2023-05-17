@@ -15,8 +15,8 @@
         const data = GAME_OBJECTS[type]
         objects.push({
             type, x,
-            y : GAME_RULES.ground - Math.random() * data.maxHeight,
-            size : 10,
+            y : GAME_RULES.ground - data.size / 2 + 5 - Math.random() * data.maxHeight,
+            size : data.size ?? 10,
             z : data.z ?? 1,
         })
         objects = objects

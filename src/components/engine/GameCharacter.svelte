@@ -149,6 +149,7 @@
     function bonusDash() {
         character.dx = Math.max(character.dx, GAME_RULES.dashSpeed)
         dash(2)
+        character.dy = -character.dx * 0.1
     }
 
     function hitSpike(target, spike) {

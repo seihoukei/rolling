@@ -3,10 +3,11 @@
     import TRIGGER_PRIORITIES from "data/trigger-priorities.js"
 
     export let rhythm = {
-        rate : 1,
-        successStart : 0.4,
-        successEnd : 0.6,
-        current : 0,
+        rate : 0.5,
+        offset : 0.4,
+        successStart : 0.5,
+        successEnd : 0.8,
+        current : 0.5,
         state : 0,
         last : 0,
     }
@@ -14,22 +15,18 @@
     let started = false
     let over = false
 
-    Trigger.on("command-advance", advance)
+    Trigger.on("command-rhythm-sync", rhythmSync)
         .setPriority(TRIGGER_PRIORITIES.ADVANCE.RHYTHM)
 
     Trigger.on("command-game-start", gameStart)
     Trigger.on("command-game-action", gameAction)
     Trigger.on("game-over", gameOver)
 
-    function advance(time) {
+    function rhythmSync(time) {
         if (!started || over)
             return
 
-        rhythm.current += time
-        while (rhythm.current > rhythm.rate * 0.75) {
-            rhythm.current -= rhythm.rate * 0.5
-//            rhythm.last = 0
-        }
+        rhythm.current = ((time + rhythm.offset) % rhythm.rate) / rhythm.rate
     }
 
     function gameStart() {
@@ -43,14 +40,14 @@
         rhythm.last = rhythm.current
 
         const median = (rhythm.successStart + rhythm.successEnd) / 2
-        const offset = Math.abs(rhythm.current / rhythm.rate - median)
+        const offset = Math.abs(rhythm.current - median)
 
-        if (rhythm.current > rhythm.rate * rhythm.successStart &&
-            rhythm.current < rhythm.rate * rhythm.successEnd) {
-            Trigger("rhythm-success", special, offset)
+        if (rhythm.current > rhythm.successStart &&
+            rhythm.current < rhythm.successEnd) {
+            Trigger("rhythm-success", special, offset * rhythm.rate)
             rhythm.state = 1
         } else {
-            Trigger("rhythm-failure", special, offset)
+            Trigger("rhythm-failure", special, offset * rhythm.rate)
             rhythm.state = -1
         }
 

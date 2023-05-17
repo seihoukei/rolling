@@ -22,7 +22,7 @@
         --character-x: ${character.x}em;
         --character-y: ${character.y}em;
         --character-size: ${character.size}em;
-        --character-background-y: ${-character.size * (Math.floor(frame) % 49)}em;
+        --character-background-y: ${-character.size * (Math.floor(frame) % ROLL_FRAMES)}em;
         --dash-opacity: ${Math.max(0, Math.min(character.dashCooldown / GAME_RULES.dashCooldown, 1))};
         --dash-direction: ${dashDirection}rad;
     `
@@ -52,6 +52,7 @@
         top : calc(50vmin + var(--character-y) - var(--camera-y) - (var(--character-size) / 2));
         background: url("../resources/scampuss/roll_sprites.png");
         background-size: var(--character-size) calc(var(--character-size) * 49);
+        background-repeat: no-repeat;
         background-position: 0 var(--character-background-y);
         cursor: pointer;
         border-radius: var(--character-size);

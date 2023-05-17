@@ -16,17 +16,13 @@
     $: nobongo = !started || over
     $: dancers = world.multiplier
 
-    $: repeatStart = 100/3
-    $: repeatEnd = 100
-    $: successStart = rhythm.successStart / 0.0075
-    $: successEnd = rhythm.successEnd / 0.0075
-    $: currentPosition = (rhythm.current / rhythm.rate) / 0.0075
-    $: lastPosition = (rhythm.last / rhythm.rate) / 0.0075
+    $: successStart = rhythm.successStart * 100
+    $: successEnd = rhythm.successEnd * 100
+    $: currentPosition = rhythm.current * 100
+    $: lastPosition = rhythm.last * 100
 
     $: cssVariables = `
         --reaction-background: url("${stateImages[rhythm.state]}");
-        --rhythm-repeat-start: ${repeatStart}%;
-        --rhythm-repeat-end: ${repeatEnd}%;
         --rhythm-success-start: ${successStart}%;
         --rhythm-success-end: ${successEnd}%;
         --rhythm-current-position: ${currentPosition}%;
@@ -107,7 +103,7 @@
         bottom : 1vw;
         border : 1px solid black;
         background: linear-gradient(to right,
-            #FF0000FF, #FF0000FF var(--rhythm-repeat-start), #FF000077 var(--rhythm-success-start),
+            #FF0000FF, #FF000077 var(--rhythm-success-start),
             #00FF0077 var(--rhythm-success-start),#00FF00FF,  #00FF0077 var(--rhythm-success-end),
             #FF000077 var(--rhythm-success-end), #FF0000FF
         );

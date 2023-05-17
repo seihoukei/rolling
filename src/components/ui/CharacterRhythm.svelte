@@ -2,10 +2,10 @@
     export let rhythm = {}
 
     $: cssVariables = `
-        --rhythm-start:${(rhythm.successStart * 100).toFixed(2)}%;
-        --rhythm-end:${rhythm.successEnd * 100}%;
-        --rhythm-current:${(1 - rhythm.current / rhythm.rate) * 125}%;
-        --rhythm-last:${(1 - rhythm.last / rhythm.rate) * 125}%;
+        --rhythm-start:${(1 - rhythm.successStart) * 100}%;
+        --rhythm-end:${(1 - rhythm.successEnd) * 100}%;
+        --rhythm-current:${(1 - rhythm.current) * 125}%;
+        --rhythm-last:${(1 - rhythm.last) * 125}%;
     `
 </script>
 
@@ -37,7 +37,11 @@
         bottom : 0;
 
         border-radius: 50%;
-        background: radial-gradient(closest-side, #FFFF5500, #FFFF5500 var(--rhythm-start), #FFFF5588 var(--rhythm-start), #FFFF5588 var(--rhythm-end), #FFFF5500 var(--rhythm-end),#FFFF5500);
+        background: radial-gradient(closest-side,
+            #FFFF5500, #FFFF5500 var(--rhythm-end),
+            #FFFF5588 var(--rhythm-start),
+            #FFFF5500 var(--rhythm-start), #FFFF5500
+        );
         background-size: 100%;
     }
 
@@ -49,7 +53,10 @@
         bottom : 0;
         border-radius: 50%;
 
-        background: radial-gradient(closest-side, #FFFF5500, #FFFF5500 80%, #FFFF55FF 80%, #FFFF5544 90%, #FFFF5500);
+        background: radial-gradient(closest-side,
+            #FFFF5500, #FFFF5500 80%,
+            #FFFF55FF 80%, #FFFF5544 90%, #FFFF5500
+        );
         transform: scale(var(--rhythm-current), var(--rhythm-current));
     }
 
@@ -65,11 +72,17 @@
     }
 
     div.good {
-        background: radial-gradient(closest-side, #55FF5500, #55FF5500 80%, #55FF55FF 80%, #55FF5544 90%, #55FF5500);
+        background: radial-gradient(closest-side,
+            #55FF5500, #55FF5500 80%,
+            #55FF55FF 80%, #55FF5544 90%, #55FF5500
+        );
     }
 
     div.bad {
-        background: radial-gradient(closest-side, #FF555500, #FF555500 80%, #FF5555FF 80%, #FF555544 90%, #FF555500);
+        background: radial-gradient(closest-side,
+            #FF555500, #FF555500 80%,
+            #FF5555FF 80%, #FF555544 90%, #FF555500
+        );
     }
 
 

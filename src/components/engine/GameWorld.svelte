@@ -24,9 +24,10 @@
             minDistance : 50,
             maxDistance : 100,
         }, {
-            items : ["spike"],
+            items : ["minispike", "spike"],
             minDistance : 50,
             maxDistance : 150,
+
         }],
 
         started : false,
