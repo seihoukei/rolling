@@ -7,10 +7,10 @@
     import GameCollisions from "components/engine/GameCollisions.svelte"
     import GameSound from "components/ui/GameSound.svelte"
     import GameRhythm from "components/engine/GameRhythm.svelte"
+    import GameSettings from "components/engine/GameSettings.svelte"
 
     import {onDestroy, onMount, tick} from "svelte"
     import Trigger from "utility/trigger-svelte.js"
-    import GameSettings from "components/engine/GameSettings.svelte"
 
     export let gameId
 
