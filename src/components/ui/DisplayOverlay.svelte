@@ -19,9 +19,9 @@
 {:else if world.rules}
     <div class="settings button" on:mouseup={showSettings}>Settings</div>
     <div class="rules">
-        Left click or tap left half to ROLL!
+        Left click / tap left half / press Z to ROLL!
 
-        Right-click or tap right half to JUMP!
+        Right click / tap right half / press C to JUMP!
 
         The faster you ROLL the higher you JUMP!
 

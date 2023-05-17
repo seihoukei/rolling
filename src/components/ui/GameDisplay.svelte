@@ -9,10 +9,13 @@
 
     export let game
 
+    let mainDiv
+
     $: characters = game?.characters ?? []
     $: shines = game?.shines ?? []
     $: objects = game?.objects ?? []
     $: world = game?.world ?? {}
+    $: mainDiv?.focus?.()
 
     function gameAction(special = false) {
         Trigger("command-game-action", special)
@@ -56,6 +59,16 @@
         event.preventDefault()
         event.stopPropagation()
     }
+
+    function keyboardEvent(event) {
+        console.log(event.keyCode)
+        if (event.keyCode === 90) {
+            normalAction(event)
+        }
+        if (event.keyCode === 67 || event.keyCode === 191) {
+            specialAction(event)
+        }
+    }
 </script>
 
 {#if game}
@@ -63,6 +76,9 @@
          on:mousedown={mouseAction}
          on:touchstart={touchAction}
          on:contextmenu={cancelEvent}
+         on:keydown={keyboardEvent}
+         tabindex="0"
+         bind:this={mainDiv}
     >
         <DisplayCamera {game}>
             {#each objects as object}
