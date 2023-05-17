@@ -10,16 +10,13 @@
 
     import {onDestroy, onMount, tick} from "svelte"
     import Trigger from "utility/trigger-svelte.js"
+    import GameSettings from "components/engine/GameSettings.svelte"
 
     export let gameId
 
     Trigger.on("command-reset-game", resetGame)
 
-    let characters
-    let objects
-    let shines
-    let rhythm
-    let world
+    let characters, objects, shines, rhythm, world, settings
 
     let game = {}
 
@@ -28,6 +25,7 @@
     $: game.shines = shines
     $: game.world = world
     $: game.rhythm = rhythm
+    $: game.settings = settings
 
     let animationFrame = null
     let lastTime = performance.now()
@@ -69,4 +67,6 @@
 />
 
 <GameDisplay {game} />
-<GameSound />
+<GameSound {game} />
+
+<GameSettings bind:settings />

@@ -9,14 +9,15 @@
 
 {#if world.rules}
     <div class="rules">
-        Click / Tap anywhere:
-        Catch the rhythm to ROLL!
+        Left click or tap left half to ROLL!
 
-        Right-click / Tap right half:
-        JUMP!
+        Right-click or tap right half to JUMP!
 
-        The faster you ROLL
-        the higher you JUMP
+        The faster you ROLL the higher you JUMP!
+
+        Hit the rhythm to ROLL faster and JUMP higher!
+
+        JUMP to the rhythm midair to DASH!
 
         READY?
     </div>
@@ -43,21 +44,20 @@
 
     div.rules {
         position: absolute;
-        left: 0;
-        right : 0;
-        top : 0;
-        bottom: 0;
 
-        color : black;
+        color : #CCCCCC;
+        background-color: #222222AA;
 
         display: flex;
         align-items: center;
         justify-content: center;
         text-align: center;
 
-        font-size: 5vmin;
+        font-size: 4vmin;
         white-space: pre-line;
         z-index : 2;
-        padding-bottom: 5vmin;
+        padding: 5vmin;
+
+        border-radius: 10vmin;
     }
 </style>

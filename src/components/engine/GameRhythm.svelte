@@ -4,7 +4,7 @@
 
     export let rhythm = {
         rate : 0.5,
-        offset : 0,
+        offset : 0.35,
         successStart : 0.5,
         successEnd : 0.8,
         current : 0.5,

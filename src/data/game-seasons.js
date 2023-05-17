@@ -18,6 +18,25 @@ const GAME_SEASONS = [{
         
         }],
     },
+},{    length : 1000,
+    background: "../resources/backgrounds/sky.jpg",
+    
+    world: {
+        gravity : 1,
+        friction : 0.1,
+        airFriction : 0.1,
+    
+        spawns : [{
+            items : ["score", "score", "score", "slow", "fast", "dash", "clone"],
+            minDistance : 50,
+            maxDistance : 100,
+        }, {
+            items : ["minispike"],
+            minDistance : 50,
+            maxDistance : 250,
+        
+        }],
+    },
 },{
     length : 1500,
     background: "../resources/backgrounds/night.jpg",
