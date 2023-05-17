@@ -22,7 +22,7 @@
         --character-x: ${character.x}em;
         --character-y: ${character.y}em;
         --character-size: ${character.size}em;
-        --character-background-y: ${-character.size * (Math.floor(frame) % ROLL_FRAMES)}em;
+        --character-background-y: ${-character.size * frame}em;
         --dash-opacity: ${Math.max(0, Math.min(character.dashCooldown / GAME_RULES.dashCooldown, 1))};
         --dash-direction: ${dashDirection}rad;
     `
@@ -44,7 +44,6 @@
 <style>
     div.character {
         position: absolute;
-        background-color : #22CC22;
         z-index: 10;
         width : var(--character-size);
         height : var(--character-size);
@@ -54,23 +53,18 @@
         background-size: var(--character-size) calc(var(--character-size) * 49);
         background-repeat: no-repeat;
         background-position: 0 var(--character-background-y);
-        cursor: pointer;
-        border-radius: var(--character-size);
     }
 
     div.still {
         background: url("../resources/scampuss/lost.png");
         background-size: var(--character-size) var(--character-size);
         background-position: 0 0;
-        cursor: pointer;
-        border-radius: 0;
     }
 
     div.dead {
         background: url("../resources/scampuss/rage.png");
         background-size: var(--character-size) var(--character-size);
         background-position: 0 0;
-        cursor: default;
     }
 
     div.dash {

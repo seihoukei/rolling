@@ -76,15 +76,11 @@
         }
     }
 
-    function jump(speedRate = 1) {
+    function jump() {
         if (character.jumping)
             return false
 
-        character.dash = GAME_RULES.jumpDashTime
-        character.dashCooldown = GAME_RULES.dashCooldown
-
         character.jumping = true
-        character.dx *= speedRate
         character.dy = - character.dx
 
         character.nonJumpDashes = 0
@@ -92,12 +88,12 @@
         return true
     }
 
-    function dash(amount) {
+    function dash(amount, yRatio = 0) {
         character.dash = amount
         character.dashCooldown = GAME_RULES.dashCooldown
 
         character.jumping = true
-        character.dy = 0
+        character.dy = - character.dx * yRatio
 
         character.nonJumpDashes++
 
@@ -110,7 +106,7 @@
 
         if (special) {
             if (!character.jumping || (character.dash <= 0 && character.dashCooldown > 0 && character.nonJumpDashes >= 3))
-                jump()
+                dash(GAME_RULES.jumpDashTime, 1)
             else if (!character.dash && character.dashCooldown <= 0)
                 dash(character.dx / GAME_RULES.dashTimeScale)
         } else {
@@ -125,7 +121,7 @@
             return
 
         if (special && !character.jumping) {
-            jump(0.7)
+            jump()
         } else {
             character.dash = 0
             character.dx *= GAME_RULES.rhythmPenalty
@@ -148,8 +144,7 @@
 
     function bonusDash() {
         character.dx = Math.max(character.dx, GAME_RULES.dashSpeed)
-        dash(2)
-        character.dy = -character.dx * 0.1
+        dash(2, 0.1)
     }
 
     function hitSpike(target, spike) {

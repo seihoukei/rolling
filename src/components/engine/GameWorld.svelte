@@ -12,24 +12,6 @@
     export let world = {
         season : 0,
 
-        gravity : 1,
-        friction : 0.1,
-        airFriction : 0.1,
-
-        minSpikeDistance : 50,
-        maxSpikeDistance : 150,
-
-        spawns : [{
-            items : ["score", "score", "score", "slow", "fast", "dash", "clone"],
-            minDistance : 50,
-            maxDistance : 100,
-        }, {
-            items : ["minispike", "spike"],
-            minDistance : 50,
-            maxDistance : 150,
-
-        }],
-
         started : false,
         rules : true,
         over : false,
@@ -68,7 +50,7 @@
     function setSeason(index) {
         world.season = index
 
-        // apply season data here
+        Object.assign(world, GAME_SEASONS[world.season].world)
 
         world.nextSeason += GAME_SEASONS[world.season].length
 

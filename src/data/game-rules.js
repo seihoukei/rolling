@@ -8,7 +8,7 @@ const GAME_RULES = {
     jumpDashTime : 0.2,
     
     rhythmBoost : 5,    //additive
-    rhythmPenalty : 0.9, //multiplicative
+    rhythmPenalty : 0.98, //multiplicative
 }
 
 export default GAME_RULES
