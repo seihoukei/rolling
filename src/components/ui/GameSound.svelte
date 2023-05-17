@@ -48,7 +48,6 @@
         bgm.gain.connect(bgm.context.destination)
 
         bgm.gain.gain.setValueAtTime(settings.bgmVolume, bgm.context.currentTime)
-        //audio.music.volume = settings.bgmVolume
 
         audio.music?.play()
     }
@@ -79,8 +78,10 @@
         }
 
         if (musicStartTime !== 0 && !audio.music.paused) {
-            const time = bgm.context.currentTime - musicStartTime
-            Trigger("command-rhythm-sync", time)
+            const time = bgm.context.currentTime - musicStartTime + 0.1 //hits the beat exactly
+            Trigger("command-rhythm-sync", time - 0.175) //offset the beat to be within green zone
         }
+
+
     }
 </script>

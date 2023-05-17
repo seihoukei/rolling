@@ -14,7 +14,7 @@
     }
 
     $: settings = game?.settings ?? {}
-    $: offset = settings.rhythmOffset ?? 0.35
+    $: offset = settings.rhythmOffset ?? 0
 
     let started = false
     let over = false
@@ -30,7 +30,7 @@
         if (!started || over)
             return
 
-        rhythm.current = ((time + offset + 0.35) % rhythm.rate) / rhythm.rate
+        rhythm.current = ((time + offset) % rhythm.rate) / rhythm.rate
     }
 
     function gameStart() {

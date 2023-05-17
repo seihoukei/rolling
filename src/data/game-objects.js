@@ -18,6 +18,15 @@ const GAME_OBJECTS = {
         size: 7,
         z : 2,
     },
+    airspike : {
+        sprite : "../resources/bonus/spike.png",
+        destructible : true,
+        score : 100,
+        maxHeight : 50,
+        event : "hit-spike",
+        size: 7,
+        z : 2,
+    },
     
     //bonus
     score : {
